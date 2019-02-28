@@ -14,6 +14,7 @@ The following chart was created using the output data:
 ### Related links
 
 * [Interactive chart](https://www.datawrapper.de/_/Ztmoc/)
+* [Weekly chart article](https://blog.datawrapper.de/weeklychart-bechdel-test/)
 
 ### Notes
 
