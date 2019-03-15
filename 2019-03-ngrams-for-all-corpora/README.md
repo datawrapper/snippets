@@ -16,10 +16,12 @@ The code in this repo is great if you want to find out **how often the same word
 5. Wait. Then celebrate your final csv.
 
 The following thing will happen once you type `make`:
+
 ![](https://i.imgur.com/wQc2Ihf.gif)
 
 ## Output
 ...is a csv that looks like this:
+
 ![](https://i.imgur.com/0UDAL0y.png)
 
 ## Related links

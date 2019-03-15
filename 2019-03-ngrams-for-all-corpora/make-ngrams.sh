@@ -8,6 +8,9 @@ QUERY=$1
 START_YEAR="1930"
 END_YEAR="2008"
 
+# change smoothing. Default = 3. 0 = not at all, 50 = a LOT.
+SMOOTHING="1"
+
 echo "generating ngrams for $QUERY"
 
 
@@ -17,7 +20,7 @@ CORPORA=
 for CORPUS in eng_us_2012 eng_gb_2012 fre_2012 ger_2012 heb_2012 rus_2012 spa_2012
 do
 	# write one csv with each corpus with the ngram.py script
-	python ngram.py "$QUERY" -caseInsensitive -noprint -startYear=$START_YEAR -endYear=$END_YEAR -corpus=$CORPUS
+	python ngram.py "$QUERY" -caseInsensitive -noprint -startYear=$START_YEAR -endYear=$END_YEAR -smoothing=$SMOOTHING -corpus=$CORPUS
 
 	# replace the column headers in the csv, change it from query content to corpus name 
 	sed -i '' "s/$QUERY/$CORPUS/g" $CORPUS.csv
