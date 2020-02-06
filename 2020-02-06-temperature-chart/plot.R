@@ -25,7 +25,7 @@ record <- d %>%
   select(-date)
 
 january <- d %>%
-  filter(date >= as.Date('2019-12-31')) %>% 
+  filter(date > as.Date('2019-12-31')) %>% 
   left_join(contextDay, 'day') %>% 
   left_join(record, 'day')
 
