@@ -11,6 +11,7 @@ needs(dplyr, readr, reshape2, jsonlite, data.table, tidyr, htmltab)
 options(scipen = 999)
 
 setwd('./data/coronavirus/')
+Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
 
 
 # ---------------------
@@ -44,10 +45,10 @@ deaths <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-1
 confirmed_recovered = merge(confirmed, recovered, by="date")
 
 merge(confirmed_recovered, deaths, by="date") %>%
-  mutate(`current cases` = confirmed - deaths - recovered) %>%
+  mutate(`current confirmed cases` = confirmed - deaths - recovered) %>%
   mutate(date = as.Date(date, "%m/%d/%y")) %>%
   arrange(date) %>%
-  select(date, `current cases`, recovered, deaths) %>%
+  select(date, `current confirmed cases`, recovered, deaths) %>%
   write_csv("worldwide_cumulative-current-recov-death-per-day.csv")
 
 
@@ -85,22 +86,22 @@ confirmed_recovered = merge(confirmed, recovered, by="date")
 yesterday = merge(confirmed_recovered, deaths, by="date") %>%
   mutate(date = as.Date(date, "%m/%d/%y")) %>%
   arrange(date) %>%
-  mutate(`new infections` = confirmed - lag(confirmed),
+  mutate(`new confirmed cases` = confirmed - lag(confirmed),
          `recoveries` = recovered - lag(recovered),
          `deaths` = deaths - lag(deaths)) %>%
-  select(date, `new infections`, recoveries, deaths) %>%
+  select(date, `new confirmed cases`, recoveries, deaths) %>%
   write_csv("worlwide-current-recov-death-per-day.csv") %>%
 
   # get just the cases for yesterday
   filter(row_number()==n()) %>%
-  select(date, `new infections`, deaths, recoveries) %>%
+  select(date, `new confirmed cases`, deaths, recoveries) %>%
   mutate(date = as.Date(date, "%Y-%m-%d")) %>%
   mutate(date = format(date, "Numbers for yesterday, %A, %B %d"))
 
 yesterday = as.data.frame(t(yesterday))
 yesterday = setDT(yesterday, keep.rownames = TRUE)[] %>%
   mutate(rn=recode(rn, "date"=" "),
-         rn=recode(rn, "new infections" = "Yesterday, this many new people <b>got tested positive</b> for COVID-19:"),
+         rn=recode(rn, "new confirmed cases" = "Yesterday, this many new people <b>got tested positive</b> for COVID-19:"),
          rn=recode(rn, "deaths"="And at least this number of people <b>died from the virus</b>:"),
          rn=recode(rn, "recoveries"="But we also know that this many people <b>recovered</b> from the virus:")) %>%
   write_csv("worlwide-current-recov-death-yesterday.csv")
@@ -143,10 +144,10 @@ confirmed_recovered = merge(confirmed, recovered, by="date")
 merge(confirmed_recovered, deaths, by="date") %>%
   mutate(date = as.Date(date, "%m/%d/%y")) %>%
   arrange(date) %>%
-  mutate(`new infections` = confirmed - lag(confirmed),
+  mutate(`new confirmed cases` = confirmed - lag(confirmed),
          `recoveries` = recovered - lag(recovered),
          `deaths` = deaths - lag(deaths)) %>%
-  select(date, `new infections`, recoveries, deaths) %>%
+  select(date, `new confirmed cases`, recoveries, deaths) %>%
   write_csv("us-current-recov-death-per-day.csv")
 
 
@@ -188,10 +189,10 @@ confirmed_recovered = merge(confirmed, recovered, by="date")
 merge(confirmed_recovered, deaths, by="date") %>%
   mutate(date = as.Date(date, "%m/%d/%y")) %>%
   arrange(date) %>%
-  mutate(`new infections` = confirmed - lag(confirmed),
+  mutate(`new confirmed cases` = confirmed - lag(confirmed),
          `recoveries` = recovered - lag(recovered),
          `deaths` = deaths - lag(deaths)) %>%
-  select(date, `new infections`, recoveries, deaths) %>%
+  select(date, `new confirmed cases`, recoveries, deaths) %>%
   write_csv("germany-current-recov-death-per-day.csv")
 
 
@@ -231,11 +232,53 @@ confirmed_recovered = merge(confirmed, recovered, by="date")
 merge(confirmed_recovered, deaths, by="date") %>%
   mutate(date = as.Date(date, "%m/%d/%y")) %>%
   arrange(date) %>%
-  mutate(`new infections` = confirmed - lag(confirmed),
+  mutate(`new confirmed cases` = confirmed - lag(confirmed),
          `recoveries` = recovered - lag(recovered),
          `deaths` = deaths - lag(deaths)) %>%
-  select(date, `new infections`, recoveries, deaths) %>%
+  select(date, `new confirmed cases`, recoveries, deaths) %>%
   write_csv("china-current-recov-death-per-day.csv")
+
+
+# ---------------------
+# New cases, recoveries and deaths per day, ITALY
+
+confirmed <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv")) %>%
+  select(-`Province/State`, -Lat, -Long) %>%
+  rename(country = `Country/Region`) %>%
+  pivot_longer(-country, names_to = "date", values_to = "confirmed") %>%
+  filter(country == "Italy") %>%
+  group_by(date) %>%
+  summarise(confirmed = sum(confirmed)) %>%
+  arrange(date)
+
+recovered <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv")) %>%
+  select(-`Province/State`, -Lat, -Long) %>%
+  rename(country = `Country/Region`) %>%
+  pivot_longer(-country, names_to = "date", values_to = "recovered") %>%
+  filter(country == "Italy") %>%
+  group_by(date) %>%
+  summarise(recovered = sum(recovered)) %>%
+  arrange(date)
+
+deaths <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv")) %>%
+  select(-`Province/State`, -Lat, -Long) %>%
+  rename(country = `Country/Region`) %>%
+  pivot_longer(-country, names_to = "date", values_to = "deaths") %>%
+  filter(country == "Italy") %>%
+  group_by(date) %>%
+  summarise(deaths = sum(deaths)) %>%
+  arrange(date)
+
+confirmed_recovered = merge(confirmed, recovered, by="date")
+
+merge(confirmed_recovered, deaths, by="date") %>%
+  mutate(date = as.Date(date, "%m/%d/%y")) %>%
+  arrange(date) %>%
+  mutate(`new confirmed cases` = confirmed - lag(confirmed),
+         `recoveries` = recovered - lag(recovered),
+         `deaths` = deaths - lag(deaths)) %>%
+  select(date, `new confirmed cases`, recoveries, deaths) %>%
+  write_csv("italy-current-recov-death-per-day.csv")
 
 
 
@@ -277,10 +320,10 @@ confirmed_recovered = merge(confirmed, recovered, by="date")
 merge(confirmed_recovered, deaths, by="date") %>%
   mutate(date = as.Date(date, "%m/%d/%y")) %>%
   arrange(date) %>%
-  mutate(`new infections` = confirmed - lag(confirmed),
+  mutate(`new confirmed cases` = confirmed - lag(confirmed),
          `recoveries` = recovered - lag(recovered),
          `deaths` = deaths - lag(deaths)) %>%
-  select(date, `new infections`, recoveries, deaths) %>%
+  select(date, `new confirmed cases`, recoveries, deaths) %>%
   write_csv("europe-current-recov-death-per-day.csv")
 
 
@@ -308,7 +351,7 @@ symbolmap <- merge(RKI_cases,german_population,by="german_name") %>%
 
 
 # ---------------------
-# Symbol map: Germany, detailed cases _ WEASEL GITHUB
+# Symbol map: Germany, detailed cases _ RENE GITHUB
 
 symbolmap <- read_csv("https://raw.githubusercontent.com/iceweasel1/COVID-19-Germany/master/germany_with_source.csv") %>%
   filter(Latitude != "N/A")
@@ -317,18 +360,37 @@ row_count <- nrow(symbolmap)
 
 symbolmap <- symbolmap %>%
   # add a bit of jitter to the coordinates
-  mutate(Latitude = runif(row_count, min=-0.05, max=0.05) + as.numeric(Latitude), Longitude = runif(row_count, min=-0.05, max=0.05) + as.numeric(Longitude)) %>%
+  mutate(Latitude = runif(row_count, min=-0.03, max=0.03) + as.numeric(Latitude), Longitude = runif(row_count, min=-0.05, max=0.05) + as.numeric(Longitude)) %>%
   write_csv("germany-symbolmap-detailed.csv")
+
+
+# ---------------------
+# Symbol map: Berlin _ RENE GITHUB
+
+berlin_coordinates <- read_csv(url("https://docs.google.com/spreadsheets/d/1YmIQVgr8RSim_zZ0jmZRji-1rFYN5l-ta3XbkOgePME/export?format=csv&gid=574682889"))
+
+berlin_data <- read_csv("https://raw.githubusercontent.com/iceweasel1/COVID-19-Germany/master/germany_with_source.csv") %>%
+  filter(`Federated state`== "Berlin") %>%
+  mutate(District=recode(District, `Neuköln`="Neukölln")) 
+
+berlin_symbolmap <- merge(berlin_data, berlin_coordinates, by="District") %>%
+  group_by(District, lat, lon, population) %>%
+  summarise(cases = n()) %>%
+  mutate(no_in_100000 = format(round(((cases*100000)/population),digits=1), nsmall = 1)) %>%
+  write_csv("berlin-symbolmap.csv")
 
 
 # ---------------------
 # Get data from the John Hokins DASHBOARD for maps
 # source: https://twitter.com/mathdroid/status/1234838261995950080
-all_cases <- fromJSON("https://covid19.mathdro.id/api/confirmed", flatten=TRUE)
+all_cases <- fromJSON("https://covid19.mathdro.id/api/confirmed", flatten=TRUE) %>%
+  select(-iso2, -iso3) %>%
+  mutate(countryRegion=recode(countryRegion, `Iran (Islamic Republic of)`="Iran"),
+         countryRegion=recode(countryRegion, `Mainland China`="China"),
+         countryRegion=recode(countryRegion, `UK`="United Kingdom"),
+         countryRegion=recode(countryRegion, `North Macedonia`="Macedonia"))
 
-# all_cases <- rbindlist(url, fill=TRUE)
-
-# calculate current cases
+# calculate current confirmed cases
 all_cases$current_cases = all_cases$confirmed - all_cases$deaths - all_cases$recovered
 
 # from wide to long
@@ -337,11 +399,11 @@ all_cases <- all_cases %>%
   rename(type = variable, cases = value, country = countryRegion, province = provinceState)
 
 ### Renaming
-all_cases$region[all_cases$country == "Mainland China"] <- "China without Hubei"
+all_cases$region[all_cases$country == "China"] <- "China without Hubei"
 all_cases$region[all_cases$country == "US"] <- "United States"
 all_cases$region[all_cases$country == "Germany"] <- "Germany"
 all_cases$region[all_cases$country == "Iran"] <- "Iran"
-all_cases$region[all_cases$country == "UK"] <- "United Kingdom"
+all_cases$region[all_cases$country == "United Kingdom"] <- "United Kingdom"
 all_cases$region[all_cases$country == "Italy"] <- "Italy"
 all_cases$region[all_cases$country == "South Korea"] <- "South Korea"
 all_cases$region[all_cases$country == "France"] <- "France"
@@ -349,14 +411,11 @@ all_cases$region[all_cases$province == "Hubei"] <- "Hubei, China"
 
 
 # ---------------------
-# Symbol map of CURRENT cases in EUROPE
+# Symbol map of current confirmed cases in EUROPE
 
 european_countries <- c("Aland", "Albania", "Andorra", "Austria", "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark", "Estonia", "Faroe Islands", "Finland", "France", "Germany", "Gibraltar", "Greece", "Guernsey", "Hungary", "Iceland", "Ireland", "Isle of Man", "Italy", "Jersey", "Kosovo", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Malta", "Moldova", "Monaco", "Montenegro", "Netherlands", "Norway", "Poland", "Portugal", "Republic of Serbia", "Romania", "San Marino", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Turkey", "Ukraine", "United Kingdom", "Vatican")
 
 all_cases %>%
-  mutate(country=recode(country, `UK`="United Kingdom")) %>%
-  mutate(country=recode(country, `North Macedonia`="Macedonia")) %>%
-  # filter for european countries
   filter(country %in% european_countries) %>%
   filter(type == "current_cases") %>%
   mutate(region = country) %>%
@@ -377,9 +436,6 @@ all_cases %>%
 # Symbol map of CONFIRMED & RECOVERED cases worldwide
 
 all_cases %>%
-  mutate(country=recode(country, `Mainland China`="China")) %>%
-
-  # choose only recovered and confirmed cases
   filter(type == "recovered" | type == "confirmed") %>%
 
   # combine province and country for tooltip
@@ -397,12 +453,12 @@ all_cases %>%
 
 
 # ---------------------
-# Symbol chart of CURRENT cases in CHINA
+# Symbol chart of current confirmed cases in CHINA
 
 all_cases %>%
 
   # filter for China
-  filter(country == "Mainland China" & type == "current_cases") %>%
+  filter(country == "China" & type == "current_cases") %>%
   mutate(region = province) %>%
   select(-province, -country) %>%
 
@@ -417,7 +473,7 @@ all_cases %>%
 
 
 # ---------------------
-# Symbol map of CURRENT cases in US
+# Symbol map of current confirmed cases in US
 
 all_cases %>%
 
@@ -437,7 +493,7 @@ all_cases %>%
 
 
 # ---------------------
-# Table that shows the confirmed / recovered / deaths / current cases in the main infected areas and in the rest of the world, compared with the population
+# Table that shows the confirmed / recovered / deaths / current confirmed cases in the main infected areas and in the rest of the world, compared with the population
 # Source for population data: https://population.un.org/wpp/Download/Standard/Population/
 
 table_data <- all_cases %>%
@@ -473,12 +529,13 @@ table <- table %>%
   mutate(current_cases_rel = population / current_cases) %>%
   mutate(current_cases_rel_nice = floor(current_cases_rel / 1000) * 1000) %>%
   select(-current_cases_rel, -population) %>%
-  rename(`current cases` = current_cases, `Currently, one in ... people is infected` = current_cases_rel_nice)
+  arrange(as.numeric(current_cases_rel_nice)) %>%
+  rename(`current confirmed cases` = current_cases, `Currently, one in ... people is confirmed to have the virus` = current_cases_rel_nice)
 
 simple_table <- table
 
 table <- table %>%
-  select(region, `current cases`, deaths, recovered,`Currently, one in ... people is infected`)
+  select(region, `current confirmed cases`, deaths, recovered,`Currently, one in ... people is confirmed to have the virus`)
 
 table$region[table$region == "Hubei, China"] <- ":cn: Hubei ^Province in China^"
 table$region[table$region == "China without Hubei"] <- ":cn: China ^without Hubei^"
@@ -498,20 +555,34 @@ write_csv(table, "country-comparison-table.csv")
 # Simple table showing just current / recoveries / deaths
 
 simple_table2 <- subset(simple_table, region=="World") %>%
-  rename(current_cases = `current cases`,  rel = `Currently, one in ... people is infected`) %>%
-  select(-rel, -region, -confirmed, -rel) %>%
-  rename(Recovered = recovered, Deaths = deaths, 'Current cases' = current_cases ) %>%
-  melt(value.name = "all_cases", ) %>%
-  mutate(relative = 100 / 7794798739 * all_cases, rel_nice = floor(7794798739 / all_cases / 1000) * 1000)
+  rename(current_cases = `current confirmed cases`,  rel = `Currently, one in ... people is confirmed to have the virus`) %>%
+  select(-rel, -region, -rel) %>%
+  rename(Recovered = recovered, Deaths = deaths, 'Current confirmed cases' = current_cases ) %>%
+  reshape2::melt(value.name = "all_cases", ) %>%
+  mutate(relative = 100 / 7794798739 * all_cases, 
+         rel_nice = floor(7794798739 / all_cases / 1000) * 1000,
+         share_of_confirmed = 100 / as.numeric(all_cases[variable == "confirmed"]) * all_cases) %>%
+  filter(variable != "confirmed")
 
 simple_table2$all_cases <- format(round(as.numeric(simple_table2$all_cases), 0), big.mark=",")
 simple_table2$relative <- format(round(as.numeric(simple_table2$relative), 5), big.mark=",")
 simple_table2$rel_nice <- format(round(as.numeric(simple_table2$rel_nice), 0), big.mark=",")
+simple_table2$share_of_confirmed <- format(round(as.numeric(simple_table2$share_of_confirmed), 2), big.mark=",")
 
 simple_table2$relative <- with(simple_table2, paste0("that's <b>", relative, "%</b> of humanity"))
 simple_table2$rel_nice <- with(simple_table2, paste0("or one in <b>",rel_nice, "</b> humans"))
+simple_table2$share_of_confirmed <- with(simple_table2, paste0("or <b>", share_of_confirmed, "%</b> of all people who ever got tested positive."))
 
-# transpose
+# create a simple 2-row table and finalize it
+simple_table3 <- simple_table2 %>% 
+  select(variable, all_cases)
+simple_table3 <-  as.data.frame(t(simple_table3)) %>%
+  select(V3,V1,V2) %>%
+  rename(deaths = V1, current = V3, recovered = V2) %>%
+  rename(V1 = current, V2 = deaths, V3 = recovered) %>%
+  write_csv("worldwide-simple-table-2rows.csv")
+
+# finalize the 4-row table
 simple_table2 <- as.data.frame(t(simple_table2)) %>%
   select(V3,V1,V2) %>%
   rename(deaths = V1, current = V3, recovered = V2) %>%
@@ -523,29 +594,55 @@ simple_table2 <- as.data.frame(t(simple_table2)) %>%
 # ---------------------
 # Stacked bar chart that shows the cases all over the world except China
 
-stacked_bar_data = all_cases
+stacked_bar_data <- all_cases
 
 stacked_bar_data$region[is.na(stacked_bar_data$region)] <- stacked_bar_data$country[is.na(stacked_bar_data$region)]
 
 stacked_bar_data = stacked_bar_data %>%
   select(cases, type, region)
 
-stacked_bar <- stacked_bar_data %>%
-  group_by(region,type) %>%
-  summarise(cases = sum(cases))
+stacked_bar <- data.frame(matrix(ncol=0,nrow=0))
 
-stacked_bar <- dcast(stacked_bar, region ~ type)
+stacked_bar <- stacked_bar_data %>%
+  mutate(cases = as.numeric(cases)) %>% 
+  group_by(region,type) %>%
+  summarise(cases = sum(cases)) %>%
+  pivot_wider(names_from = "type", values_from = "cases")
+
+table_per_capita <- stacked_bar
 
 # filter cases over 50 outside of China
 stacked_bar = stacked_bar %>%
-  filter(`current_cases` > 50) %>%
+  filter(`current_cases` > 50 & region != "Others") %>%
   select(-confirmed) %>%
-  rename(`current cases` = current_cases) %>%
-  filter(!grepl("China",region))
-
-# reordering columns
-stacked_bar = stacked_bar[,c(1,4,2,3)]
+  rename(`current confirmed cases` = current_cases) %>%
+  filter(!grepl("China",region)) %>%
+  
+  # reordering columns
+  select(region, `current confirmed cases`, deaths, recovered)
 
 write_csv(stacked_bar, "countries-over-50-stackedbar.csv")
+
+
+# ---------------------
+# Table with top per-capita-cases
+
+flag_icons <- read_csv(url("https://docs.google.com/spreadsheets/d/1YmIQVgr8RSim_zZ0jmZRji-1rFYN5l-ta3XbkOgePME/export?format=csv&gid=1821874908"))
+
+table_per_capita <- merge(table_per_capita, flag_icons, by="region")
+ 
+table_per_capita2 <- merge(table_per_capita, population, by="region") %>%
+  mutate(region = paste(code, region, sep=' ')) %>%
+  filter(current_cases != 0) %>%
+  mutate(no_in_million = format(round(((current_cases*1000000)/population),digits=1), nsmall = 1)) %>%
+  select(region, current_cases, no_in_million, deaths, recovered, continent) %>%
+  rename(Country = region, 
+         `Current confirmed cases` = current_cases,
+         Deaths = deaths,
+         `Recovered` = recovered,
+         `that's like ... out of a million inhabitants` = no_in_million) %>%
+  write_csv("worldwide-top-countries.csv")
+  
+
 
 
