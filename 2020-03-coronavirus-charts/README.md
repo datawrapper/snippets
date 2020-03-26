@@ -4,6 +4,11 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+#### March 25
+- Updated all maps & map tooltips to only show confirmed cases and deaths, not recoveries anymore.  
+
+#### March 24
+- Changed the area chart "New confirmed COVID–19 cases, per day" to an area chart "New confirmed COVID–19 _deaths_, per day".
 
 #### March 24
 
