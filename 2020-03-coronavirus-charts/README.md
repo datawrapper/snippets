@@ -4,6 +4,13 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+#### March 28
+- Added a line chart of the growth rate of deaths. 
+- Did some housecleaning, so that the article doesn't load too long: 
+	- Removed the chart showing doubling times of confirmed _cases_ and the chart showing growth rates on confirmed _cases_, but linked to them in case readers are still interested. They still get updated 	every day. 
+	- Removed the map of confirmed cases in Chinese regions, because it doesn't add much new information anymore. It still gets updated and you can find it [here](https://www.datawrapper.de/_/5ASge/) and [in the River](https://river.datawrapper.de/_/5ASge) if you want to re-use it.
+	- Replaced the US county map with an US state map. You can still find the US county map [here](https://www.datawrapper.de/_/WmR3P/) and [in the River](https://river.datawrapper.de/_/WmR3P).
+
 #### March 25
 - Updated all maps & map tooltips to only show confirmed cases and deaths, not recoveries anymore.  
 
@@ -13,9 +20,10 @@ The R script might always not up to date; we'll push it every few days to this r
 #### March 24
 
 - Today is a sad day: Johns Hopkins university [decided](https://github.com/CSSEGISandData/COVID-19/issues/1250) to **not track recovered cases anymore**, so we removed them from all our visualizations. (You can still find the historical number of recoveries [here](https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv).) Many countries (e.g. Germany) haven't properly reported recovered cases, so these numbers were likely too low anyway. But now our visualizations look like there are no recoveries at all – so we added bold text over some of them stating that lots of people recovered already. The following three changes were made due to the change in the Johns Hopkins data:
-- Changed the stacked bar charts to split bar charts.
-- Removed the area chart showing current cases, deaths and recoveries worldwide, since it's too similar to the line chart now. 
-- Removed the table "Current cases, recoveries and deaths in selected countries", since it's now too similar to the sorted table "Current cases, recoveries and deaths in all countries"
+	- Changed the stacked bar charts to split bar charts.
+	- Removed the area chart showing current cases, deaths and recoveries worldwide, since it's too similar to the line chart now. 
+	- Removed the table "Current cases, recoveries and deaths in selected countries", since it's now too similar to the sorted table "Current cases, recoveries and deaths in all countries"
+
 - In addition: Added the line chart "Growth rate of confirmed cases in selected countries" 
 - Added the area chart "New confirmed COVID–19 cases, per day"
 - Added a chart showing doubling times of _deaths_.
