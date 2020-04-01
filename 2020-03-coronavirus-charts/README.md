@@ -4,6 +4,10 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+#### April 1
+- Brought back the number of recovered cases to every chart and table possible. 
+- Added a table with the growth rates of confirmed cases in US **counties**. 
+
 #### March 28
 - Added a line chart of the growth rate of deaths. 
 - Did some housecleaning, so that the article doesn't load too long: 
