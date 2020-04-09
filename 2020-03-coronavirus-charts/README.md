@@ -4,9 +4,14 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+
+#### April 9
+- Brought back the area chart showing confirmed cases per day in selected countries and regions.
+- Put a **seven day rolling average** on both area charts showing confirmed cases and deaths per day in selected countries and regions.
+- Put a seven day rolling average on all line charts showing new cases, deaths and recoveries per day
+
 #### April 7
 - Added a map of confirmed cases in US counties, colored by per capita numbers. 
-
 
 #### April 1
 - Brought back the number of recovered cases to every chart and table possible. 
