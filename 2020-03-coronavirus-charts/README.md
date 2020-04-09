@@ -4,6 +4,10 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+#### April 7
+- Added a map of confirmed cases in US counties, colored by per capita numbers. 
+
+
 #### April 1
 - Brought back the number of recovered cases to every chart and table possible. 
 - Added a table with the growth rates of confirmed cases in US **counties**. 
