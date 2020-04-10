@@ -4,6 +4,11 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+#### April 10
+- Put a seven day rolling average on both doubling time line charts (for confirmed cases and deaths).
+- Round the number of confirmed cases, deaths and recoveries to give them an approximate rather than a fact-like feel.
+- Highlighted Turkey in the chart "Growth rate of confirmed cases in selected countries", and removed the highlight of Isreal.
+
 
 #### April 9
 - Brought back the area chart showing confirmed cases per day in selected countries and regions.
