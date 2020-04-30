@@ -1,0 +1,16 @@
+{
+  "name": "top-100-expensive-releases",
+  "version": "1.0.0",
+  "description": "Scripts used to get top 100 most expensive releases from the Discogs blog",
+  "main": "export.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ivan Lokhov",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "sharp": "^0.25.2"
+  }
+}
