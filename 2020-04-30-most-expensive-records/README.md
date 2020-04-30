@@ -1,4 +1,4 @@
-# Top 100 most expensive records sold on Discogs
+# Top 100 most expensive music records sold on Discogs
 
 This is a collection of node.js scripts used to scrape the Discogs blog to get a list of top 100 most expensive records sold on its marketplace.
 
