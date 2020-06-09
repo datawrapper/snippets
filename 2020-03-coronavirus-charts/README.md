@@ -4,6 +4,14 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+#### June 9
+- Moved all visualizations above our thoughts on responsible data visualizations.
+- Changed the order of visualizations at the top.
+- Removed some visualizations from the article (all on doubling rates, for example). You can still find them linked in the index below the visusalizations.
+- Added line charts for Brazil, Pakistan, Iran, India, Russia, Peru.
+- Added small multiple line charts with weekly mortality for selected countries and cities.
+- Added a table comparing new cases last week with new cases the week before. 
+
 
 #### April 15
 - Added a chart showing per capita cases in US counties and states.
