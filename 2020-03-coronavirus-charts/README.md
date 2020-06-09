@@ -4,6 +4,14 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+
+#### April 15
+- Added a chart showing per capita cases in US counties and states.
+- Added a chart showing the change in requests for car directions on Apple Maps.
+- Added a chart showing the change in requests for public transport directions on Apple Maps.
+- Removed numbers after the decimal point for all tables showing doubling days. These days are calculated based on uncertain numbers and can only show a trend, not hard facts.
+- Added bar charts in the table "Coronavirus COVID-19 cases in all countries"
+
 #### April 10
 - Put a seven day rolling average on both doubling time line charts (for confirmed cases and deaths).
 - Round the number of confirmed cases, deaths and recoveries to give them an approximate rather than a fact-like feel.
