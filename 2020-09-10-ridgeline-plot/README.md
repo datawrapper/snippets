@@ -4,6 +4,10 @@ This is a node.js script to process data to recreate the album cover of *Unknown
 
 ![Ridgeline plot: Unknown Pleasures by Joy Division](https://img.datawrapper.de/UR2uC/full.png)
 
+### Related links
+
+* [Weekly chart article](https://blog.datawrapper.de/weekly-ridgeline-plot/)
+
 ### Notes
 
 You need to have [node.js](https://nodejs.org/en/) installed on your system in order to run this script. Execute the script by running `node script.js`.
