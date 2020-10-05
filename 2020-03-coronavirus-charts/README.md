@@ -4,6 +4,12 @@ Here you can find our latest changes to the charts, maps, and tables in the Data
 
 The R script might always not up to date; we'll push it every few days to this repo. 
 
+#### October 5
+The coronavirus, sadly, is back in our news feeds: In many Western countries, cases are on the rise. We made some changes to our article so that we keep offering useful visualizations: 
+- moved the excess mortality charts to the bottom of the article.
+- removed many visualizations from the article, including the car/public transport routing charts, lots of maps that show the number of tota cases per county/state/etc. You can still find all these charts and maps in the River; they're linked at the bottom of the article. They're also getting updated as frequently as before (every 20min).
+
+
 #### June 9
 - Moved all visualizations above our thoughts on responsible data visualizations.
 - Changed the order of visualizations at the top.
@@ -11,7 +17,6 @@ The R script might always not up to date; we'll push it every few days to this r
 - Added line charts for Brazil, Pakistan, Iran, India, Russia, Peru.
 - Added small multiple line charts with weekly mortality for selected countries and cities.
 - Added a table comparing new cases last week with new cases the week before. 
-
 
 #### April 15
 - Added a chart showing per capita cases in US counties and states.
