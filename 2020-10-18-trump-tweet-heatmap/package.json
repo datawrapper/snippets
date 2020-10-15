@@ -1,0 +1,25 @@
+{
+  "name": "trump-tweets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "all": "node get-tweets.js && node count-tweets.js && node get-stats.js && node create-heatmap.js --id"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "d3-array": "^2.8.0",
+    "d3-color": "^2.0.0",
+    "d3-interpolate": "^2.0.1",
+    "d3-scale": "^3.2.3",
+    "dotenv": "^8.2.0",
+    "moment": "^2.29.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "yargs": "^16.0.3"
+  }
+}
