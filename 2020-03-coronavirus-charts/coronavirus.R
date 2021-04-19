@@ -249,7 +249,7 @@ yesterday = setDT(yesterday, keep.rownames = TRUE)[] %>%
 # ---------------------
 # New cases, recoveries and deaths per day, for selected countries, for line chart
 
-countries_lines <- c("US", "Spain", "Germany", "China", "Italy", "Brazil", "Russia", "Peru", "Chile", "India", "Pakistan", "Mexico", "Iran")
+countries_lines <- c("US", "Spain", "Germany", "China", "France", "Italy", "Brazil", "Russia", "Peru", "Chile", "India", "Pakistan", "Mexico", "Iran")
 
 for (country in countries_lines) {  
   confirmed <- download_data_and_filter("confirmed", country)
@@ -291,12 +291,12 @@ join_and_export_recov("europe") %>%
 # ---------------------
 # New cases and deaths per day, for seleced countries, for area chart
 
-columnchart_countries <- c("Italy", "Spain", "Germany", "US", "United Kingdom", "Switzerland", "China", "Iran", "France", "Korea, South", "Belgium", "Netherlands", "Canada",  "Brazil", "Turkey", "Russia")
+columnchart_countries <- c("Italy", "Spain", "Germany", "US", "United Kingdom", "Switzerland", "China", "Iran", "France", "Korea, South", "Belgium", "Netherlands", "Canada",  "Brazil", "Turkey", "Russia", "Peru", "India", "Colombia", "Chile", "Mexico")
 columnchart_africa <- c("Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde", "Cameroon", "Central African Republic", "Chad", "Comoros", "Côte d'Ivoire", "Congo (Kinshasa)", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Ethiopia", "French Southern Territories", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Mayotte", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Congo (Brazzaville)", "Rwanda", "Réunion", "Saint Helena, Ascension and Tristan da Cunha", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Swaziland", "Tanzania", "Togo", "Tunisia", "Uganda", "Western Sahara", "Zambia", "Zimbabwe", "Eswatini")
-columnchart_asia <- c("Afghanistan", "Armenia", "Azerbaijan", "Bahrain", "Bangladesh", "Bhutan", "British Indian Ocean Territory", "Brunei", "Cambodia", "Christmas Island", "Cocos (Keeling) Islands", "Georgia", "Hong Kong", "India", "Iraq", "Israel", "Jordan", "Kazakhstan", "Kuwait", "Kyrgyzstan", "Laos", "Lebanon", "Macau", "Malaysia", "Maldives", "Mongolia", "Myanmar", "Nepal", "North Korea", "Oman", "Pakistan", "Philippines", "Qatar", "Saudi Arabia", "Singapore", "Sri Lanka", "Palestine", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Thailand", "Timor-Leste", "Turkmenistan", "United Arab Emirates", "Uzbekistan", "Vietnam", "Yemen", "Hubei, China", "China without Hubei", "Syria", "Japan", "Indonesia")
+columnchart_asia <- c("Afghanistan", "Armenia", "Azerbaijan", "Bahrain", "Bangladesh", "Bhutan", "British Indian Ocean Territory", "Brunei", "Cambodia", "Christmas Island", "Cocos (Keeling) Islands", "Georgia", "Hong Kong", "Iraq", "Israel", "Jordan", "Kazakhstan", "Kuwait", "Kyrgyzstan", "Laos", "Lebanon", "Macau", "Malaysia", "Maldives", "Mongolia", "Myanmar", "Nepal", "North Korea", "Oman", "Pakistan", "Philippines", "Qatar", "Saudi Arabia", "Singapore", "Sri Lanka", "Palestine", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Thailand", "Timor-Leste", "Turkmenistan", "United Arab Emirates", "Uzbekistan", "Vietnam", "Yemen", "Hubei, China", "China without Hubei", "Syria", "Japan", "Indonesia")
 columnchart_oceania <- c("American Samoa", "Australia", "Cook Islands", "Federated States of Micronesia", "Fiji", "French Polynesia", "Guam", "Kiribati", "Marshall Islands", "Nauru", "New Caledonia", "New Zealand", "Niue", "Norfolk Island", "Northern Mariana Islands", "Palau", "Papua New Guinea", "Pitcairn", "Samoa", "Solomon Islands", "Tokelau", "Tonga", "Tuvalu", "Vanuatu", "Wallis and Futuna")
-columnchart_southamerica <- c("Argentina", "Aruba", "Bolivia", "Bonaire, Sint Eustatius and Saba", "Chile", "Colombia", "Curaçao", "Ecuador", "Falkland Islands", "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Trinidad and Tobago", "Uruguay", "Venezuela")
-columnchart_northamerica <- c("Anguilla", "Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Bermuda", "Cayman Islands", "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "El Salvador", "Greenland", "Grenada", "Guadeloupe", "Guatemala", "Haiti", "Honduras", "Jamaica", "Martinique", "Mexico", "Montserrat", "Nicaragua", "Panama", "Puerto Rico", "Saint Barthelemy", "Saint Kitts and Nevis", "Saint Lucia", "St. Martin", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Sint Maarten", "Turks and Caicos Islands", "United States Minor Outlying Islands", "Virgin Islands (British)", "Virgin Islands (U.S.)")
+columnchart_southamerica <- c("Argentina", "Aruba", "Bolivia", "Bonaire, Sint Eustatius and Saba", "Curaçao", "Ecuador", "Falkland Islands", "French Guiana", "Guyana", "Paraguay", "Suriname", "Trinidad and Tobago", "Uruguay", "Venezuela")
+columnchart_northamerica <- c("Anguilla", "Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Bermuda", "Cayman Islands", "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "El Salvador", "Greenland", "Grenada", "Guadeloupe", "Guatemala", "Haiti", "Honduras", "Jamaica", "Martinique", "Montserrat", "Nicaragua", "Panama", "Puerto Rico", "Saint Barthelemy", "Saint Kitts and Nevis", "Saint Lucia", "St. Martin", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Sint Maarten", "Turks and Caicos Islands", "United States Minor Outlying Islands", "Virgin Islands (British)", "Virgin Islands (U.S.)")
 columnchart_europe <- c("Aland Islands", "Albania", "Andorra", "Belarus", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czechia", "Denmark", "Estonia", "Faroe Islands", "Finland", "Macedonia", "Gibraltar", "Greece", "Guernsey", "Holy See", "Hungary", "Iceland", "Ireland", "Isle of Man", "Jersey", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco", "Montenegro", "Norway", "Poland", "Portugal", "Romania", "San Marino", "Serbia", "Slovakia", "Slovenia", "Svalbard and Jan Mayen", "Sweden", "Ukraine", "Austria")
 
 
@@ -350,10 +350,10 @@ area_chart_divided_by_country <- function(case_type) {
     full_join(confirmed_oceania, by="date") %>%
     full_join(confirmed_northamerica, by="date") %>%
     full_join(confirmed_southamerica, by="date") %>%
-    select(date, China, `South Korea`, Iran, Russia, `Other Asian countries`,
+    select(date, China, `South Korea`, Iran, Russia, India, `Other Asian countries`,
            Italy, Germany, France, Spain, Belgium, Netherlands, `United Kingdom`, Switzerland, Turkey, `Other European countries`,
-           US, Canada, `Other North-American countries`,
-           Brazil, `Other South-American countries`, Africa, `Australia & Oceania`) %>%
+           US, Canada, Mexico, `Other North-American countries`,
+           Brazil, Peru, Colombia, Chile, `Other South-American countries`, Africa, `Australia & Oceania`) %>%
     write_csv(sprintf("%s-per-day-selected-countries.csv", case_type)) %>%
     
     # rolling average
@@ -398,7 +398,7 @@ kreise_fun("deaths") %>%
   select(ags, cases, deaths) %>%
   full_join(kreise_add, by="ags") %>%
   drop_na(ags) %>%
-  mutate(rel_nice = floor(population / cases / 10) * 10) %>%
+  mutate(rel_nice = floor(population / cases)) %>%
   select(lat, long, ags, agstext, NUTS3, name,  cases, deaths, population, rel_nice) %>%
   write_csv("germany-kreise.csv")
 
@@ -427,7 +427,7 @@ german_population <- read_csv(url("https://docs.google.com/spreadsheets/d/1YmIQV
   select(german_name, english_name, lat, long, cases, deaths, population) %>%
   mutate(cases = as.numeric(cases),
          relative = round((100 / population * cases),digits=2),
-         rel_nice = floor(population / cases / 100) * 100,
+         rel_nice = floor(population / cases),
          no_in_million = round(((cases*1000000)/population),digits=1),
          population = round(as.numeric(population), 0)) %>%
   write_csv("germany-symbolmap-per-state.csv")
@@ -582,7 +582,7 @@ read_csv(url("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-
   group_by(fips) %>%
   filter(row_number()==n()) %>%
   drop_na(county) %>%
-  mutate(rel_nice = floor(population / cases / 10) * 10) %>%
+  mutate(rel_nice = floor(population / cases)) %>%
   write_csv("us-counties-pop.csv")
 
 
@@ -658,7 +658,7 @@ simple_table <- read_csv(url("https://docs.google.com/spreadsheets/d/1YmIQVgr8RS
   mutate(population = ifelse(region == "rest-of-world", 5679690897, population),
          population = ifelse(region == "World", 7794798739, population),
          confirmed_rel = population/confirmed,
-         confirmed_rel_nice = floor(confirmed_rel / 10) * 10) %>%
+         confirmed_rel_nice = floor(confirmed_rel)) %>%
   select(-confirmed_rel, -population) %>%
   arrange(as.numeric(confirmed_rel_nice)) %>%
   rename(`Total confirmed cases` = confirmed,
@@ -697,8 +697,8 @@ simple_table2 <- subset(simple_table, region=="World") %>%
   pivot_longer(-extracolumn, names_to = "type", values_to = "cases") %>%
   select(-extracolumn) %>%
   mutate(relative = 100 / 7794798739 * cases,
-         rel_nice = floor(7794798739 / cases / 10) * 10) %>%
-  mutate(cases = format(round(as.numeric(cases) / 100)*100, big.mark=","),
+         rel_nice = floor(7794798739 / cases)) %>%
+  mutate(cases = format(round(as.numeric(cases)), big.mark=","),
          relative = format(round(as.numeric(relative), 3), big.mark=","),
          rel_nice = format(round(as.numeric(rel_nice), 0), big.mark=","),
          relative = paste0("that's <b>", relative, "%</b> of humanity"),
@@ -780,7 +780,12 @@ table_per_capita3 <- table_per_capita_recov %>%
   full_join(flag_icons, by="region") %>%
   drop_na(confirmed) %>%
   filter(region != "Diamond Princess" && region != "MS Zaandam") %>%
-  ungroup()
+  ungroup() %>%
+  
+  # get rid of NAs in United States list for recoveries and current confirmed cases 
+  mutate(recovered = replace_na(recovered, 0),
+         `current confirmed cases` = replace_na(`current confirmed cases`, 0))
+  
 
 continents <- table_per_capita3 %>%
   group_by(continent) %>%
@@ -814,7 +819,7 @@ table_per_capita2 <- table_per_capita3 %>%
   mutate(region_de = ifelse(is.na(code),region_de,paste(code, region_de, sep=' '))) %>%
   filter(confirmed != 0) %>%
   mutate(no_in_million = format(round(((confirmed*1000000)/population),digits=1), nsmall = 1),
-         rel_nice = floor(population / confirmed / 100) * 100)
+         rel_nice = floor(population / confirmed))
 
 table_per_capita_en <- table_per_capita2 %>%
   unique() %>%
@@ -977,6 +982,7 @@ all_together = merge(all_summed_up, all_growthrates, by=c("country", "continent"
 
 
 
+
 # ---------------------
 # summed up number of cases last seven days vs before
 # for table
@@ -986,6 +992,7 @@ summed_up_seven <-  read_csv(url("https://raw.githubusercontent.com/CSSEGISandDa
   rename(country = `Country/Region`,
          province = `Province/State`) %>%
   select(-Lat, -Long) %>%
+  mutate(`9/24/20` = as.numeric(`9/24/20`)) %>%
   pivot_longer(-c(country, province), names_to = "date", values_to = "confirmed") %>%
   mutate(date = as.Date(date, "%m/%d/%y")) %>%
   mutate(country = ifelse(country == "China" & province == "Hong Kong", "Hong Kong", country)) %>%
@@ -1001,7 +1008,7 @@ summed_up_seven <-  read_csv(url("https://raw.githubusercontent.com/CSSEGISandDa
                             confirmed),
          new_cases = confirmed - lag(confirmed),
          last7days = sum(new_cases[between(row_number(), n()-6, n())]),
-         beforethat = sum(new_cases[between(row_number(), n()-11, n()-7)]),
+         beforethat = sum(new_cases[between(row_number(), n()-13, n()-7)]),
          total = sum(new_cases, na.rm=TRUE),
          yesterday = new_cases[n()],
          change = case_when(
@@ -1016,7 +1023,8 @@ summed_up_seven <-  read_csv(url("https://raw.githubusercontent.com/CSSEGISandDa
   select(country, yesterday, last7days, beforethat, change, total) %>%
   distinct() %>%
   mutate(country=recode(country, `Korea, South`="South Korea"),
-         country=recode(country, `US`="United States")) %>%
+         country=recode(country, `US`="United States"),
+         country=recode(country, `Taiwan*`="Taiwan")) %>%
   filter(country != "Diamond Princess",
          total > 9) %>%
   rename(region = country,
@@ -1031,6 +1039,42 @@ all_summed_up_seven <- merge(summed_up_seven, flag_icons, by="region") %>%
   rename(country = region) %>%
   write_csv("summed-up_seven.csv")
 
+overview_week <- summed_up_seven %>% 
+  inner_join(flag_icons, by="region") %>%
+  select(region, code, change) %>%
+  group_by(change) %>%
+  summarise(countries = paste(region, collapse=" • "), 
+            icons = paste(code, collapse=" ")) %>%
+  ungroup() %>%
+  mutate(change_text = case_when(
+    change == "▲▲" ~ "1",
+    change == "▲" ~ "2",
+    change == "~" ~ "3",
+    change == "▼" ~ "4",
+    change == "▼▼" ~ "5",
+    change == "🎉" ~ "6"
+  )) %>%
+  mutate(text = case_when(
+    change == "▲▲" ~ "**▲▲ More than twice as many cases this week as last week**<br>",
+    change == "▲" ~ "**▲ More cases this week as last week**<br>",
+    change == "~" ~ "**~ The same number of cases this week as last week**<br>",
+    change == "▼" ~ "**▼ Fewer cases this week as last week**<br>",
+    change == "▼▼" ~ "**▼▼ Fewer than half the cases this week as last week**<br>",
+    change == "🎉" ~ "**🎉 Zero cases last week, zero cases this week**<br>"
+  )) %>% 
+  arrange(change_text) %>%
+  unite("data", c(text, countries), sep = "", remove = FALSE,) %>%
+  unite("data2", c(text, icons), sep = "", remove = FALSE,) %>%
+  mutate(data2 = gsub("NA", "", data2))
+
+overview_week %>% 
+  select(data) %>%
+  write_csv("summed-up-seven-countries.csv")
+  
+overview_week %>% 
+  select(data2) %>%
+  write_csv("summed-up-seven-icons.csv")
+  
 
 
 
@@ -1072,24 +1116,18 @@ NYT_data %>%
   mutate(cases = (rollapplyr(cases, 7, mean, fill=NA)),
          rel = 100/population*cases) %>%
   drop_na() %>%
-  filter(max(cases) > 200 & rel > 0.015 & max(rel) > 1) %>%
+  filter(max(cases) > 200 & rel > 0.015 & max(rel) > 2) %>%
   ungroup() %>%
   select(-population, -cases) %>%
+  group_by(date, state) %>%
+  distinct() %>%
+  ungroup() %>%
   pivot_wider(names_from = "state", values_from = "rel") %>%
   arrange(date) %>%
   write_csv("us_states_newcases.csv")
 
 
-#   
-# chart = ggplot(ya, aes(x=date, y=rel, group=state)) + 
-#   geom_line() +
-#   scale_y_continuous(trans='log10')
-# ggplotly(chart)
-# 
-
-
-
-# ---------------------
+#   ---------------------
 # D O U B L I N G   T I M E S   O V E R   T I M E
 # for line chart
 message(" D O U B L I N G   T I M E S   O V E R   T I M E  for line chart")
@@ -1134,7 +1172,7 @@ linechart_doubling <- function(kind_of_cases, cases_threshold, days_threshold, d
     filter(confirmed >= cases_threshold, max(confirmed > cases_min_threshold)) %>%
     mutate(days = ifelse(country =="China", 6:(n()+6), 0:n())) %>%
     select(-closest_to_100, -date) %>%
-    filter(max(days) > days_threshold & days <= 140) %>%
+    filter(max(days) > days_threshold & days <= 110) %>%
     ungroup() %>%
     pivot_wider(names_from = country, values_from = confirmed) %>%
     arrange(days) %>%
@@ -1153,7 +1191,7 @@ linechart_doubling <- function(kind_of_cases, cases_threshold, days_threshold, d
 }
 
 linechart_doubling("confirmed", 100, 10, 1000000, 1000)
-linechart_doubling("deaths", 10, 5, 103400, 100)
+linechart_doubling("deaths", 10, 5, 750000, 100)
 
 
 
@@ -1277,11 +1315,18 @@ read_csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-coun
 message('excess mortality')
 dir.create(file.path('.', 'excess_mortality'), showWarnings = FALSE)
 
-mortality_data <- read_csv('https://raw.githubusercontent.com/Financial-Times/coronavirus-excess-mortality-data/master/data/ft_excess_deaths.csv')
+mortality_data <- read_csv('https://raw.githubusercontent.com/Financial-Times/coronavirus-excess-mortality-data/master/data/ft_excess_deaths.csv') %>% 
+  unique() %>% 
+  filter(period == 'week', 'week' != 'NA') # only use weekly data
+
 mortality_regions <- mortality_data %>% 
-  filter(period == 'week') %>%
   select(region, country) %>% 
-  unique()
+  unique() %>% 
+  filter(country != 'Brazil') # remove Brazil because the Brazil data is weird
+
+expected_mortality <- mortality_data %>% 
+  filter(year == 2020) %>%
+  select(region, week, expected_deaths)
 
 slugify <- function(str) {
   str %>% 
@@ -1302,9 +1347,11 @@ for (i in seq_along(mortality_regions$region)) {
   dir.create(file.path('.', sprintf('excess_mortality/%s', country_slug)), showWarnings = FALSE)
   
   mortality_data %>%  
-    filter(period == 'week', region == region_name) %>%
-    select(region, year, week, deaths, expected_deaths) %>%
+    filter(region == region_name) %>%
+    select(region, year, week, deaths) %>%
     pivot_wider(names_from = year, values_from = deaths) %>%
+    left_join(expected_mortality, by = c("week", "region")) %>%
     mutate(date = as.Date(paste(2020, week-1, 1, sep='-'), '%Y-%U-%u')) %>%
+    filter(expected_deaths != 'NA') %>%
     write_csv(sprintf('excess_mortality/%s.csv', path))
 }
