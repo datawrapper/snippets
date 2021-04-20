@@ -951,7 +951,8 @@ summed_up <-  read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COV
   select(country, yesterday, last5days, beforethat, change, total) %>%
   distinct() %>%
   mutate(country=recode(country, `Korea, South`="South Korea"),
-         country=recode(country, `US`="United States")) %>%
+         country=recode(country, `US`="United States"),
+         country=recode(country, `Burma`="Myanmar")) %>%
   filter(country != "Diamond Princess",
          total > 9) %>%
   rename(region = country,
@@ -964,6 +965,8 @@ all_summed_up <- merge(summed_up, flag_icons, by="region") %>%
   mutate(region = paste(code, region, sep=' ')) %>%
   select(-code) %>%
   rename(country = region) %>%
+  mutate(country=recode(country, `NA Kosovo`="Kosovo"),
+         country=recode(country, `NA West Bank and Gaza`="West Bank and Gaza")) %>%
   write_csv("summed-up.csv")
 
 # for weekly chart
