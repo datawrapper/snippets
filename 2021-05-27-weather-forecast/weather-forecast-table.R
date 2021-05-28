@@ -6,6 +6,7 @@ library(readr)
 library(dplyr)
 library(weathermetrics)
 library(mosmix)
+library(rjson)
 
 station_id <- 'C720' # Berlin-Tempelhof
 
@@ -29,10 +30,10 @@ if (file.exists('out/stations.csv')) {
   stations <- read_fwf('https://www.dwd.de/EN/ourservices/met_application_mosmix/mosmix_stations.cfg;jsessionid=6A47F126BB1F3B5383F07B7CC03595E9.live31092?view=nasPublication&nn=495490',
                        col_positions = fwf_widths(c(5,6,6,5,21,7,8,6,7,5),
                                                   col_names = c('clu','CofX','id','ICAO', 'name','lat','lon','elev','Hmod-H', 'type')), skip = 4)
-  good.stations <- stations %>% filter(!is.na(as.numeric(id)) & type=='LAND')  
+  good.stations <- stations  
 }
 
-
+now <- Sys.time()
 final_stations <- c()
 
 dir.create('out', showWarnings=F)
@@ -66,8 +67,12 @@ if (!file.exists('out/stations.csv')) {
   good.stations %>% filter(id %in% final_stations) %>% write_csv('out/stations.csv')
 }
 
+json <- toJSON(list(describe=list(intro=paste0('<span style="display:block;text-align:center;font-size:16px;font-weight:400;color:#777">', format(now, '%B %d, %Y'),'</span>')), 
+                    annotate=list(notes=format(now, 'Last updated at %I:%M%p on %B %d, %Y'))))
+write(json, 'out/last-update.json')
+
 f <- file('out/last-update.txt')
-writeLines(as.character(Sys.time()), f)
+writeLines(as.character(now), f)
 close(f)
 
 
