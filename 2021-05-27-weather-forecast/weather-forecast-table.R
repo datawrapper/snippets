@@ -59,6 +59,9 @@ for (station_id in good.stations$id) {
 
 good.stations %>% filter(id %in% final_stations) %>% write_csv('out/stations.csv')
 
+f <- file('out/last-update.txt')
+writeLines(as.character(Sys.time()), f)
+close(f)
 
 
 
