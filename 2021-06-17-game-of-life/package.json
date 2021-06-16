@@ -1,0 +1,16 @@
+{
+  "name": "game-of-life",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ivan Lokhov",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^7.1.7",
+    "node-fetch": "^2.6.1"
+  }
+}
