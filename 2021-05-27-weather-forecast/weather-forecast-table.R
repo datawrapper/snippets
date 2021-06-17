@@ -75,5 +75,5 @@ f <- file('out/last-update.txt')
 writeLines(as.character(now), f)
 close(f)
 
-
+unlink(kml)
 
