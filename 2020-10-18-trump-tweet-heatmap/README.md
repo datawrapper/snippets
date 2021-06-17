@@ -1,6 +1,6 @@
 # Create a Datawrapper scatterplot heatmap of @realDonaldTrump's tweets
 
-This is a collection of node.js scripts for pulling data from the [Trump Twitter Archive](https://trumptwitterarchive.com), and creating the following chart, which was published on the Datawrapper Blog as a Weekly Chart ([here](https://blog.datawrapper.de/weekly-chart-top-100-expensive-music-records/) for the original article)
+This is a collection of node.js scripts for pulling data from the [Trump Twitter Archive](https://trumptwitterarchive.com), and creating the following chart, which was published on the Datawrapper Blog as a Weekly Chart ([here](https://blog.datawrapper.de/weekly-chart-trump-tweet-heatmap/) for the original article)
 
 <img src="./trump-tweet-heatmap.png" alt="Heatmap" width="400"/>
 
