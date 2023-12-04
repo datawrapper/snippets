@@ -1,0 +1,96 @@
+# install packages
+install.packages('devtools')
+devtools::install_github('munichrocker/DatawRappr')
+install.packages('rdwd')
+
+library(DatawRappr)
+library(rdwd)
+
+datawrapper_auth(api_key = Sys.getenv('WEBINAR_TOKEN'), overwrite = TRUE )
+
+dw_test_key()
+
+folder <- dw_create_folder('APIcharts')
+folder_id <- folder[['id']]
+
+# ----- create function!
+create_line_chart <- function(city) {
+  
+  # load, clean and prepare data
+  cities_data <- selectDWD(city, res='daily', var='kl', per='recent')
+  file <- dataDWD(cities_data, read=FALSE)
+  clim <- readDWD(file, varnames=TRUE)
+  subset_clim <- clim[, c('MESS_DATUM', 'TXK.Lufttemperatur_Max', 'TNK.Lufttemperatur_Min')]
+  names(subset_clim)[names(subset_clim) == 'TXK.Lufttemperatur_Max'] <- 'Max'
+  names(subset_clim)[names(subset_clim) == 'TNK.Lufttemperatur_Min'] <- 'Min'
+  
+  # create datawrapper line chart
+  line <- dw_create_chart(
+    folderId = folder_id,
+    type = 'd3-lines'
+  )
+  
+  line_id <- line[['content']][['publicId']]
+  
+  dw_data_to_chart(
+    subset_clim,
+    chart_id = line_id
+  )
+  
+  dw_edit_chart(
+    chart_id = line_id,
+    folderId = folder_id,
+    
+    title = sprintf('Daily temperatures in %s ', city),
+    intro = 'Daily temperature in Celsius degrees',
+    byline = 'Guillermina Sutter Schneider',
+    
+    annotate = sprintf('This chart was updated on %s', format(Sys.time(), "%a %b %d %X %Y")),
+    
+    describe = list(
+      'source-name' = 'German Weather Service (DWD)',
+      'source-url' = 'https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/'
+    ),
+    
+    visualize = list(
+      'custom-colors' = list(
+        'Max' = '#09bb9f',
+        'Min' = '#1d81a2'
+      ),
+      
+      'line-widths' = list(
+        'Max' = 3,
+        'Min' = 3),
+      
+      'labeling' = 'top',
+      
+      'line-symbols' = TRUE,
+      'line-symbols-on' = 'both',
+      'line-symbols-size' = 3.5,
+      'line-symbols-shape' = 'circle',
+      
+      'custom-area-fills' = list(
+        list(
+          'to' = 'Min',
+          'from' = 'Max',
+          'color' = '#cccccc',
+          'opacity' = 0.3
+        )
+      )
+      
+    )
+ 
+  )
+  
+  dw_publish_chart(
+    chart_id = line_id,
+    return_urls = TRUE
+  )
+  
+}
+
+create_line_chart('Bamberg')
+
+city_list <- list('Frankfurt/Main', 'Garmisch-Partenkirchen', 'Berlin Brandenburg', 
+                  'Erfurt-Weimar', 'Koeln-Bonn', 'Potsdam', 'Muenchen-Stadt', 
+                  'Arkona', 'Wuerzburg')
