@@ -1,0 +1,31 @@
+{
+  "name": "muenster-kreuzungen",
+  "private": true,
+  "description": "Rank Münster road junctions by injury accidents (Unfallatlas, 2019 onwards) for Datawrapper charts",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/main.ts",
+    "test": "node --test --experimental-test-snapshots src/main.test.ts",
+    "test:update": "node --test --experimental-test-snapshots --test-update-snapshots src/main.test.ts",
+    "format": "eslint --fix",
+    "lint": "eslint && tsc"
+  },
+  "dependencies": {
+    "d3-dsv": "^3.0.1",
+    "fflate": "^0.8.3",
+    "kdbush": "^4.0.2"
+  },
+  "devDependencies": {
+    "@e18e/eslint-plugin": "^0.8.1",
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/d3-dsv": "^3.0.7",
+    "@types/node": "^22.20.5",
+    "eslint": "^10.14.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.2"
+  }
+}

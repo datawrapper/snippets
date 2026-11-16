@@ -1,0 +1,5 @@
+node_modules/
+data/
+# third-party data (Unfallatlas, OpenStreetMap), not under this repo's licence
+output/
+src/main.test.ts.snapshot
