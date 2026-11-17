@@ -1,0 +1,6 @@
+- [x] read files / LOC per filetype on a folder
+  - `cloc --vcs=git --json .`
+- [x] go back in time by checking out a commit from last quarter recursively
+  - `git checkout \`git rev-list -n 1 --before="2021-10-01 23:59" main\``
+- [x] collect data in CSV
+  - javascript to the rescue
