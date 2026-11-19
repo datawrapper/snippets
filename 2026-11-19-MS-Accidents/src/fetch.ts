@@ -167,13 +167,16 @@ export async function load_osm(): Promise<Osm> {
 		}
 		const body = new URLSearchParams({
 			// footway and path nodes chain separate junctions together;
-			// construction and proposed roads aren't open
+			// construction and proposed roads aren't open. The street nodes
+			// come without tags, so traffic signals are a query of their own
 			data: `
 [out:json][timeout:180];
 area["de:amtlicher_gemeindeschluessel"="${AGS}"]->.ms;
 way(area.ms)["highway"]["name"]
   ["highway"!~"^(footway|path|construction|proposed)$"];
 out body; >; out skel qt;
+node(area.ms)["highway"="traffic_signals"];
+out qt;
 `,
 		})
 		const bytes = await download(overpass_url, { method: 'POST', body })

@@ -174,7 +174,11 @@ function apply_junction_fixes(
 	return fixed_labels
 }
 
-export function build_junctions(osm: Osm, merge_within_m: number): Junction[] {
+export function build_junctions(
+	osm: Osm,
+	merge_within_m: number,
+	signals_within_m: number,
+): Junction[] {
 	// index nodes and ways
 	const coords_m = new Map<number, Point>()
 	const ways: OsmWay[] = []
@@ -233,6 +237,13 @@ export function build_junctions(osm: Osm, merge_within_m: number): Junction[] {
 		new Set(roundabouts.flatMap((way) => way.nodes)),
 		(node) => find(node),
 	)
+	const signals_within = spatial_index(
+		osm.elements.flatMap((element) =>
+			element.type === 'node' && element.tags?.highway === 'traffic_signals'
+				? [to_m(element.lon, element.lat)]
+				: [],
+		),
+	)
 
 	// describe each junction
 	return Array.from(group(), ([root, node_ids]) => {
@@ -248,8 +259,18 @@ export function build_junctions(osm: Osm, merge_within_m: number): Junction[] {
 		// averaging the evenly spread ring nodes centres roundabouts; their
 		// entries alone cluster on the sides with more streets
 		const [lon, lat] = from_m(mean(anchors_m))
+		// OSM usually maps signals on the stop lines before the junction, not
+		// on the junction node
+		const has_signals = anchors_m.some(
+			(point) => signals_within(point, signals_within_m).length > 0,
+		)
 		return {
 			label: labels.get(root) ?? junction_label(ways_here, by_prominence),
+			type: ring_nodes.has(root)
+				? 'roundabout'
+				: has_signals
+					? 'traffic_signals'
+					: 'no_signals',
 			streets: streets_of(node_ids),
 			lon,
 			lat,

@@ -1,4 +1,10 @@
-type OsmNode = { type: 'node', id: number, lon: number, lat: number }
+type OsmNode = {
+	type: 'node'
+	id: number
+	lon: number
+	lat: number
+	tags?: Record<string, string>
+}
 export type OsmWay = {
 	type: 'way'
 	id: number
@@ -17,8 +23,11 @@ export type Accident = {
 	lat: number
 }
 
+export type JunctionType = 'roundabout' | 'traffic_signals' | 'no_signals'
+
 export type Junction = {
 	label: string
+	type: JunctionType
 	streets: string
 	lon: number
 	lat: number

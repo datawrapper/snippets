@@ -4,6 +4,7 @@ import { csvFormat } from 'd3-dsv'
 import { by_german } from './junctions.ts'
 import type {
 	Accident,
+	JunctionType,
 	JunctionWithAccidents,
 	RankedJunction,
 } from './types.ts'
@@ -95,12 +96,17 @@ const lat_lng = (junction: RankedJunction) =>
 	[Number(junction.lat.toFixed(6)), Number(junction.lon.toFixed(6))] as const
 
 // single quotes in HTML, so the CSV needs no escaped quotes
-function links(junction: RankedJunction, map_text: string) {
+function street_view_link(junction: RankedJunction) {
+	const [lat, lng] = lat_lng(junction)
+	const url = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${lat},${lng}`
+	return `<a href='${url}' target='_blank'>Street View</a>`
+}
+
+function links(junction: RankedJunction) {
 	const [lat, lng] = lat_lng(junction)
 	const osm = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=18/${lat}/${lng}`
-	const street_view = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${lat},${lng}`
-	return `<a href='${osm}' target='_blank'>${map_text}</a> · `
-		+ `<a href='${street_view}' target='_blank'>Street View</a>`
+	return `<a href='${osm}' target='_blank'>Map</a> · `
+		+ street_view_link(junction)
 }
 
 type Column = [
@@ -118,7 +124,7 @@ export function write_table(
 			'Junction',
 			(junction) =>
 				`<b>#${junction.rank}</b> ${junction.label}<br>`
-				+ `<span style="font-size: 0.8em">${links(junction, 'Map')}</span>`,
+				+ `<span style="font-size: 0.8em">${links(junction)}</span>`,
 		],
 		[
 			`Accidents (${SERIOUS_HEADER})`,
@@ -143,48 +149,43 @@ export function write_table(
 	)
 }
 
-const BIKE_SHARE_COLOURS: [min_pct: number, colour: string][] = [
-	[80, '#08306b'],
-	[50, '#4292c6'],
-	[0, '#9ecae1'],
-]
+// Datawrapper's own "signal" icon is a radio antenna
+const JUNCTION_ICONS: Record<JunctionType, string> = {
+	roundabout: 'roundabout',
+	traffic_signals: 'material:traffic-lights',
+	no_signals: 'material:signpost',
+}
+
+// One style property per element: semicolons make Datawrapper's import guess
+// ";" as the CSV delimiter
+function locator_tooltip(junction: RankedJunction, years: string[]) {
+	const first = years[0]
+	const last = years.at(-1)!
+	return `<h2 style='margin-top:0'>#${junction.rank} ${junction.label}</h2>`
+		// on the inline <small>, line-height can't go below the tooltip's
+		+ `<div style='line-height:1.2'><small>${junction.streets}</small></div>`
+		+ street_view_link(junction)
+		+ '<hr>'
+		+ [
+			`<b>${junction.accidents.length}</b> accidents `
+			+ `(<b>${with_serious_injuries(junction)}</b> ${SERIOUS_HEADER})`,
+			`<b>${bike_pct(junction)}%</b> with a bike involved`,
+			`<b>${in_year(junction, first)} → ${in_year(junction, last)}</b> `
+			+ `from ${first} to ${last}`,
+		].join('<br>')
+}
 
 function locator_marker(junction: RankedJunction, years: string[]) {
 	const [lat, lng] = lat_lng(junction)
-	const cells = (tag: string, values: (string | number)[]) =>
-		`<tr>${values.map((value) => `<${tag}>${value}</${tag}>`).join('')}</tr>`
-	const per_year
-		= '<table>'
-			+ cells('th', years)
-			+ cells(
-				'td',
-				years.map((year) => in_year(junction, year)),
-			)
-			+ '</table>'
-	const bike = bike_pct(junction)
 	return {
 		lat,
 		lng,
-		// the rank sits inside the icon instead of next to it. A space, because
-		// Datawrapper fills an empty title with "Marker Text"
+		// no label next to the icons. A space, because Datawrapper fills an
+		// empty title with "Marker Text"
 		title: ' ',
-		icon: 'circle',
-		'marker-symbol': junction.rank,
+		icon: JUNCTION_ICONS[junction.type],
 		name: junction.label, // Datawrapper's marker list only
-		color: BIKE_SHARE_COLOURS.find(([min_pct]) => bike >= min_pct)![1],
-		// the table is a block, so it sits between the <br>-joined lines
-		tooltip:
-			[
-				`<b>${junction.label}</b>`,
-				`${junction.accidents.length} injury accidents ${years[0]}–${years.at(-1)}`,
-				`${with_serious_injuries(junction)} of them with serious injuries`,
-				`${bike}% with a bike involved`,
-			].join('<br>')
-			+ per_year
-			+ [
-				`<small>${junction.streets}</small>`,
-				links(junction, 'OpenStreetMap'),
-			].join('<br>'),
+		tooltip: locator_tooltip(junction, years),
 	}
 }
 

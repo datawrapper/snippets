@@ -10,6 +10,8 @@ import {
 // accidents farther than this from every junction node count as mid-block.
 // Both distances are tuned on Münster's junctions
 const MAX_ACCIDENT_DISTANCE_M = 30
+// traffic signals within this of a junction node make it signalised
+const MAX_SIGNAL_DISTANCE_M = MAX_ACCIDENT_DISTANCE_M
 // larger values chain junctions (at 35 m, Bremer Platz swallows 5 streets)
 const MERGE_JUNCTIONS_WITHIN_M = 25
 // junctions tied at the cut-off are all included, so there can be more rows
@@ -18,7 +20,11 @@ const TABLE_ROWS = 20
 async function main() {
 	const accidents = await load_accidents()
 	const osm = await load_osm()
-	const junctions = build_junctions(osm, MERGE_JUNCTIONS_WITHIN_M)
+	const junctions = build_junctions(
+		osm,
+		MERGE_JUNCTIONS_WITHIN_M,
+		MAX_SIGNAL_DISTANCE_M,
+	)
 	const with_accidents = snap_accidents(
 		accidents,
 		junctions,
