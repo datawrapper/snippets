@@ -12,6 +12,8 @@ Junctions with the most injury accidents in Münster, 2019–2025
   `table_top20.csv` Datawrapper table; the year columns sit side by side for mini charts
   `map_junctions.csv` Datawrapper locator map markers for the table's junctions, with an icon for
   roundabouts, junctions with traffic lights and ones without
+  `map_focus.csv` the same for just the junctions the chart's text is about (`MAP_FOCUS` in
+  `src/main.ts`)
 
 Usage:
 

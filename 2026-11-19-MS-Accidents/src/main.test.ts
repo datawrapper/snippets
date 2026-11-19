@@ -4,7 +4,7 @@ import { join } from 'node:path'
 import { before, test } from 'node:test'
 
 const ROOT = join(import.meta.dirname, '..')
-const OUTPUTS = ['table_top20.csv', 'map_junctions.csv']
+const OUTPUTS = ['table_top20.csv', 'map_junctions.csv', 'map_focus.csv']
 
 // main.ts runs as a black box, so refactors can't break the test itself.
 // It needs the cached files in data/
